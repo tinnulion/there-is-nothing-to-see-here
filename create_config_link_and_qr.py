@@ -6,7 +6,6 @@ import qrcode
 import random
 import subprocess
 import sys
-import string
 import termcolor
 import traceback
 
@@ -76,6 +75,15 @@ CONFIG = {
 
 LINK_UNCHANGE = "encryption=none&flow=xtls-rprx-vision&sni=www.microsoft.com&fp=chrome&security=reality"
 LINK_TEMPLATE = "vless://{uuid}@{ip}:443/?type=tcp&{unchange}&pbk={pbk}&sid={sid}#{nickname}"
+
+
+def validate_ip_address(ip):
+    try:
+        _ = ipaddress.ip_address(ip)
+        termcolor.cprint("The IP address {} seems ok".format(ip), "green")
+    except Exception as _:
+        termcolor.cprint("Provided IP address is invalid!", "red")
+        sys.exit(0)
 
 
 def get_uuid_and_keys():
@@ -174,7 +182,11 @@ def cli():
     args = parser.parse_args()
 
     ip = args.ip
+    validate_ip_address(ip)
     dest = os.path.abspath(args.dest)
+    if not os.path.exists(dest):
+        termcolor.cprint("Cannot find destination folder provided!", "red")
+        sys.exit(0)
 
     uuid, public_key, private_key = get_uuid_and_keys()
     if (uuid is None) or (public_key is None) or (private_key is None):
