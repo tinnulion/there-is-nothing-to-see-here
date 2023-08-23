@@ -12,7 +12,9 @@ import traceback
 
 CONFIG = {
     "log": {
-        "loglevel": "info"
+        "loglevel": "info",
+        "access": "/var/log/xray/access.log",
+        "error": "/var/log/xray/error.log"
     },
     "routing": {
         "rules": [],
