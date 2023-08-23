@@ -200,7 +200,7 @@ def cli():
         os.path.join(dest, "config.json"),
         uuid,
         sid,
-        public_key,
+        private_key,
         nickname
     )
 
