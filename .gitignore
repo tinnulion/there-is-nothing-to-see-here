@@ -3,6 +3,7 @@
 link.txt
 *.json
 *.png
+*.db
 
 __pycache__/
 *.py[cod]
